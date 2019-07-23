@@ -14,12 +14,18 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
 ## Installation
 
   1. Upload the files in the `upload` folder to root of your osCommerce store.
-  1. In: `includes/javascript/javascript.php` add:
-      ``` 
-      <script src="https://sdk.paylike.io/3.js"></script>
-      <script src="<?=DIR_WS_JAVASCRIPT?>paylike.js"></script> 
+  1. In: `includes/template_top.php` add:
       ```
-     Between  `<?php if($content == 'checkout') { ?> <? } ?>` (line:43-47).
+        <?php
+            if ( basename( $PHP_SELF ) == 'checkout_confirmation.php' ) {
+                ?>
+                <script src="https://sdk.paylike.io/3.js"></script>
+                <script src="<?php echo DIR_WS_INCLUDES ?>javascript/paylike.js"></script>
+                <?php
+    	        }
+    	    ?>
+        ```
+     Anywhere betwen the `head` tags.
   1. Install the Paylike module from modules -> payment in the admin  
   1. Insert the app key and your public key in the settings and enable the plugin
   
