@@ -13,6 +13,10 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
 
 ## Installation
 
+ Once you have installed osCommerce, follow these simple steps:
+  1. Signup at [paylike.io](https://paylike.io) (it’s free) 
+  1. Create a live account
+  1. Create an app key for your osCommerce website
   1. Upload the files in the `upload` folder to root of your osCommerce store.
   1. In: `includes/template_top.php` add:
       ```
