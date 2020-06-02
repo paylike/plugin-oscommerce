@@ -16,7 +16,7 @@ function pay(args, checkout, form) {
     $.ajax({
       method: 'POST',
       dataType: 'json',
-      url: formActionURL,
+      url: orderDataPath,
       data: {
         action: 'setTransactionId',
         id: r.transaction.id
