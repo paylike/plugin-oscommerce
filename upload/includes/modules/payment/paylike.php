@@ -1,8 +1,6 @@
 <?php
-
 class paylike {
     var $code, $enabled, $app, $response, $key, $appKey, $sort_order, $redirect_url, $success_url, $title;
-
 
     // class constructor
     function __construct() {
@@ -17,8 +15,20 @@ class paylike {
         $this->title = MODULE_PAYMENT_PAYLIKE_TEXT_TITLE;
         $this->formTitle = $_SESSION['PAYLIKE_TITLE'] = MODULE_PAYMENT_PAYLIKE_TITLE;
         $this->paymentType = MODULE_PAYMENT_PAYLIKE_PAYMENT_TYPE;
-    }
 
+        if (getenv('HTTPS') == 'on' /** Check if SSL is on */) {
+            $this->catalog_dir = HTTPS_CATALOG_SERVER.DIR_WS_HTTPS_CATALOG;
+            $this->admin_dir = HTTPS_SERVER.DIR_WS_HTTPS_ADMIN;
+        } else {
+            $this->catalog_dir = HTTP_CATALOG_SERVER.DIR_WS_CATALOG;
+            $this->admin_dir = HTTP_SERVER.DIR_WS_ADMIN;
+        }
+
+        if (strpos($_SERVER['REQUEST_URI'], 'action=edit')) {
+            echo '<script type="text/javascript" src="'.$this->admin_dir.'includes/modules/payment/paylike/paylike.js"></script>';
+            echo '<link rel="stylesheet" type="text/css" href="'.$this->admin_dir.'includes/modules/payment/paylike/paylike.css"/>';
+        }
+    }
 
     function selection() {
         global $cart_payment_id, $order;
@@ -48,7 +58,9 @@ class paylike {
         $title .= '<img style="width: 45px;margin-left: 5px;" src="'.DIR_WS_IMAGES.'modules/payment/paylike/mastercard.svg">';
         $title .= '<img style="width: 45px;margin-left: 5px;" src="'.DIR_WS_IMAGES.'modules/payment/paylike/visa.svg">';
         $title .= '<img style="width: 45px;margin-left: 5px;" src="'.DIR_WS_IMAGES.'modules/payment/paylike/visaelectron.svg">';
-        $title .= '<p>'.MODULE_PAYMENT_PAYLIKE_TEXT_TEST_DESCRIPTION.'</p>';
+        if (MODULE_PAYMENT_PAYLIKE_TRANSACTION_MODE == 'Test') {
+            $title .= '<p>'.MODULE_PAYMENT_PAYLIKE_TEXT_TEST_DESCRIPTION.'</p>';
+        }
         return [
             'id' => $this->code,
             'icon' => $icon,
@@ -293,8 +305,6 @@ class paylike {
         global $order_id, $insert_id, $cart_payment_id;
 
         if ($cart_payment_id != '') $order_id = substr($cart_payment_id, strpos($cart_payment_id, '-') + 1); else $order_id = $insert_id;
-
-
     }
 
     function after_process() {
@@ -324,7 +334,6 @@ class paylike {
     function output_error() {
         return false;
     }
-
 
     function check() {
         if (!isset($this->_check)) {
@@ -357,16 +366,14 @@ class paylike {
             'MODULE_PAYMENT_PAYLIKE_PAYMENT_TYPE',
             'MODULE_PAYMENT_PAYLIKE_TITLE',
             'MODULE_PAYMENT_PAYLIKE_TRANSACTION_MODE',
-            'MODULE_PAYMENT_PAYLIKE_KEY',
             'MODULE_PAYMENT_PAYLIKE_APP_KEY',
-            'MODULE_PAYMENT_PAYLIKE_TEST_KEY',
+            'MODULE_PAYMENT_PAYLIKE_KEY',
             'MODULE_PAYMENT_PAYLIKE_TEST_APP_KEY',
+            'MODULE_PAYMENT_PAYLIKE_TEST_KEY',
             'MODULE_PAYMENT_PAYLIKE_ORDER_STATUS_ID',
             'MODULE_PAYMENT_PAYLIKE_SORT_ORDER'
         ];
     }
-
-
 }
 
 ?>
