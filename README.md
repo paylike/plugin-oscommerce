@@ -31,13 +31,8 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
      Anywhere betwen the `head` tags.
   6. In: `includes/.htaccess` add:
       ```
-      <FilesMatch "paylike\.php$">
-         <IfModule mod_authz_core.c>
-            Require all granted
-         </IfModule>
-         <IfModule !mod_authz_core.c>
-            Allow from all
-        </IfModule>
+      <FilesMatch "paylike.php">
+         Allow from all
       </FilesMatch>
       ```
       After the last line.
