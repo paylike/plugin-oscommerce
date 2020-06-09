@@ -34,6 +34,7 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
       <FilesMatch "paylike.php">
          Allow from all
       </FilesMatch>
+
       ```
       After the last line.
   7. In: `admin/modules.php`
@@ -47,7 +48,7 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
       ```
       require_once('includes/modules/payment/paylike/validate.php');
       ```
-      After 'reset($HTTP_POST_VARS['configuration']);' line;
+      After 'case 'save':' line;
 
       7.3.Replace 'tep_db_query("update " . TABLE_CONFIGURATION . " set configuration_value = '" . $value . "' where configuration_key = '" . $key . "'");' line with:
       ```
@@ -59,10 +60,10 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
       7.4.Add:
       ```
       if(sizeof($errors)){
-        tep_redirect(tep_href_link(FILENAME_MODULES, 'set=' . $set . '&module=' . $HTTP_GET_VARS['module'] . '&action=edit'));
+        tep_redirect(tep_href_link('modules.php', 'set=' . $set . '&module=' . $HTTP_GET_VARS['module'] . '&action=edit'));
       }
       ```
-      Before 'tep_redirect(tep_href_link(FILENAME_MODULES, 'set=' . $set . '&module=' . $HTTP_GET_VARS['module']));' line;
+      Before 'tep_redirect(tep_href_link('modules.php', 'set=' . $set . '&module=' . $_GET['module']));' line;
 
       7.5.Add:
       ```
