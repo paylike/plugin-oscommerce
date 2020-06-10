@@ -6,6 +6,8 @@ class paylike {
     function __construct() {
         global $order;
 
+        $this->form_action_url = '';
+        $this->form_action_url_temp = tep_href_link('checkout_process.php', '', 'SSL');
         $this->code = 'paylike';
         $this->redirect_url = HTTP_SERVER . '/includes/callbacks/paylike_callback.php';
         $this->sort_order = MODULE_PAYMENT_PAYLIKE_SORT_ORDER;
@@ -16,17 +18,9 @@ class paylike {
         $this->formTitle = $_SESSION['PAYLIKE_TITLE'] = MODULE_PAYMENT_PAYLIKE_TITLE;
         $this->paymentType = MODULE_PAYMENT_PAYLIKE_PAYMENT_TYPE;
 
-        if (getenv('HTTPS') == 'on' /** Check if SSL is on */) {
-            $this->catalog_dir = HTTPS_CATALOG_SERVER.DIR_WS_HTTPS_CATALOG;
-            $this->admin_dir = HTTPS_SERVER.DIR_WS_HTTPS_ADMIN;
-        } else {
-            $this->catalog_dir = HTTP_CATALOG_SERVER.DIR_WS_CATALOG;
-            $this->admin_dir = HTTP_SERVER.DIR_WS_ADMIN;
-        }
-
         if (strpos($_SERVER['REQUEST_URI'], 'action=edit')) {
-            echo '<script type="text/javascript" src="'.$this->admin_dir.'includes/modules/payment/paylike/paylike.js"></script>';
-            echo '<link rel="stylesheet" type="text/css" href="'.$this->admin_dir.'includes/modules/payment/paylike/paylike.css"/>';
+            echo '<script type="text/javascript" src="includes/modules/payment/paylike/paylike.js"></script>';
+            echo '<link rel="stylesheet" type="text/css" href="includes/modules/payment/paylike/paylike.css"/>';
         }
     }
 
@@ -51,13 +45,13 @@ class paylike {
 
         if (tep_not_null($this->icon)) $icon = tep_image($this->icon, $this->title);
         ob_start();
-        require_once(DIR_WS_MODULES . 'paylike.php');
+        require_once('includes/modules/paylike.php');
         $scripts = ob_get_clean();
         $title = $this->title;
-        $title .= '<img style="width: 45px;margin-left: 5px;" src="'.DIR_WS_IMAGES.'modules/payment/paylike/maestro.svg">';
-        $title .= '<img style="width: 45px;margin-left: 5px;" src="'.DIR_WS_IMAGES.'modules/payment/paylike/mastercard.svg">';
-        $title .= '<img style="width: 45px;margin-left: 5px;" src="'.DIR_WS_IMAGES.'modules/payment/paylike/visa.svg">';
-        $title .= '<img style="width: 45px;margin-left: 5px;" src="'.DIR_WS_IMAGES.'modules/payment/paylike/visaelectron.svg">';
+        $title .= '<img style="width: 45px;margin-left: 5px;" src="images/modules/payment/paylike/maestro.svg">';
+        $title .= '<img style="width: 45px;margin-left: 5px;" src="images/modules/payment/paylike/mastercard.svg">';
+        $title .= '<img style="width: 45px;margin-left: 5px;" src="images/modules/payment/paylike/visa.svg">';
+        $title .= '<img style="width: 45px;margin-left: 5px;" src="images/modules/payment/paylike/visaelectron.svg">';
         if (MODULE_PAYMENT_PAYLIKE_TRANSACTION_MODE == 'Test') {
             $title .= '<p>'.MODULE_PAYMENT_PAYLIKE_TEXT_TEST_DESCRIPTION.'</p>';
         }
@@ -128,7 +122,7 @@ class paylike {
 
         }
         ob_start();
-        require_once(DIR_WS_MODULES . 'paylike.php');
+        require_once('includes/modules/paylike.php');
         $scripts = ob_get_clean();
         return ['title' => MODULE_PAYMENT_PAYLIKE_TEXT_DESCRIPTION,'fields' => [
             [
@@ -292,8 +286,14 @@ class paylike {
 
     function process_button() {
         global $order;
+        /* Set order success status */
         $order->info['order_status'] = MODULE_PAYMENT_PAYLIKE_ORDER_STATUS_ID;
-        return '<span id="payLikeCheckout" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary ui-priority-primary" role="button" aria-disabled="false"><span class="ui-button-icon-primary ui-icon ui-icon-check"></span><span class="ui-button-text">'.IMAGE_BUTTON_CONFIRM_ORDER.'</span></span>'.'<style>form[name=checkout_confirmation] [id*=tdb]{display: none;}</style>';
+
+        /* Define custom button */
+        $btn = '<button type="submit" action="'.$this->form_action_url_temp.'" id="payLikeCheckout" class="btn btn-success btn-block btn-lg"> <span class="fas fa-check-circle" aria-hidden="true"></span>'.IMAGE_BUTTON_CONFIRM_ORDER.'</button>';
+
+        /* Hide default buttom and show custom button*/
+        return $btn.'<style>form[name=checkout_confirmation] button[type=submit]:not(#payLikeCheckout){display: none;}</style>';
     }
 
     function javascript_validation() {
@@ -314,7 +314,7 @@ class paylike {
             if (isset($_SESSION['paylikeId'])) {
                 $transactionId = $_SESSION['paylikeId'];
                 $descriptor = "Order #$insert_id";
-                require(DIR_WS_CLASSES . 'paylike/init.php'); // init paylike sdk;
+                require('includes/classes/paylike/init.php'); // init paylike sdk;
 
                 $paylike = new \Paylike\Paylike($this->appKey);
                 $amount = end($order_totals);
