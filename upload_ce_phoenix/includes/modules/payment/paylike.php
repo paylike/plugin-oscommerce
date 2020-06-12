@@ -24,6 +24,11 @@ class paylike extends abstract_payment_module
         $this->appKey = MODULE_PAYMENT_PAYLIKE_TRANSACTION_MODE == 'Test' ? MODULE_PAYMENT_PAYLIKE_TEST_APP_KEY : MODULE_PAYMENT_PAYLIKE_APP_KEY;
         $this->formTitle = $_SESSION['PAYLIKE_TITLE'] = MODULE_PAYMENT_PAYLIKE_TITLE;
         $this->paymentType = MODULE_PAYMENT_PAYLIKE_PAYMENT_TYPE;
+        
+        if (strpos($_SERVER['REQUEST_URI'], 'action=edit')) {
+            echo '<script type="text/javascript" src="includes/modules/payment/paylike/paylike_admin.js"></script>';
+            echo '<link rel="stylesheet" type="text/css" href="includes/modules/payment/paylike/paylike_admin.css"/>';
+        }
     }
 
     /* Define payment method selector on checkout page */

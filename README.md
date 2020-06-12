@@ -41,15 +41,15 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
       ```
       require_once('includes/modules/payment/paylike/errors.php');
       ```
-      Before 'require('includes/application_top.php');' line;
+      Before require('includes/application_top.php'); line;
 
       7.2.Add:
       ```
       require_once('includes/modules/payment/paylike/validate.php');
       ```
-      After 'reset($HTTP_POST_VARS['configuration']);' line;
+      After reset($HTTP_POST_VARS['configuration']); line;
 
-      7.3.Replace 'tep_db_query("update " . TABLE_CONFIGURATION . " set configuration_value = '" . $value . "' where configuration_key = '" . $key . "'");' line with:
+      7.3.Replace tep_db_query("update " . TABLE_CONFIGURATION . " set configuration_value = '" . $value . "' where configuration_key = '" . $key . "'"); line with:
       ```
       if(sizeof($errors) === 0 || array_search($key, $validation_keys) === FALSE){
         tep_db_query("update " . TABLE_CONFIGURATION . " set configuration_value = '" . $value . "' where configuration_key = '" . $key . "'");
@@ -62,13 +62,13 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
         tep_redirect(tep_href_link(FILENAME_MODULES, 'set=' . $set . '&module=' . $HTTP_GET_VARS['module'] . '&action=edit'));
       }
       ```
-      Before 'tep_redirect(tep_href_link(FILENAME_MODULES, 'set=' . $set . '&module=' . $HTTP_GET_VARS['module']));' line;
+      Before tep_redirect(tep_href_link(FILENAME_MODULES, 'set=' . $set . '&module=' . $HTTP_GET_VARS['module'])); line;
 
       7.5.Add:
       ```
       if(isset($errorHandler))$errorHandler->display();
       ```
-      After 'case 'edit':' line.
+      After case 'edit': line.
   8. Install the Paylike module from modules -> payment in the admin  
   9. Insert the app key and your public key in the settings and enable the plugin
 
