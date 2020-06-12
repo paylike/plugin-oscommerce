@@ -42,13 +42,13 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
       ```
       require_once('includes/modules/payment/paylike/errors.php');
       ```
-      Before 'require('includes/application_top.php');' line;
+      Before require('includes/application_top.php'); line;
 
       7.2.Add:
       ```
       require_once('includes/modules/payment/paylike/validate.php');
       ```
-      After 'case 'save':' line;
+      After case 'save': line;
 
       7.3.Replace 'tep_db_query("update " . TABLE_CONFIGURATION . " set configuration_value = '" . $value . "' where configuration_key = '" . $key . "'");' line with:
       ```
@@ -63,13 +63,13 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
         tep_redirect(tep_href_link('modules.php', 'set=' . $set . '&module=' . $HTTP_GET_VARS['module'] . '&action=edit'));
       }
       ```
-      Before 'tep_redirect(tep_href_link('modules.php', 'set=' . $set . '&module=' . $_GET['module']));' line;
+      Before tep_redirect(tep_href_link('modules.php', 'set=' . $set . '&module=' . $_GET['module'])); line;
 
       7.5.Add:
       ```
       if(isset($errorHandler))$errorHandler->display();
       ```
-      After 'case 'edit':' line.
+      After case 'edit': line.
   8. Install the Paylike module from modules -> payment in the admin  
   9. Insert the app key and your public key in the settings and enable the plugin
 
