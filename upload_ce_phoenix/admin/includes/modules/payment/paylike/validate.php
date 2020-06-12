@@ -19,15 +19,11 @@ if (isset($errorHandler)) {
 /* Validate module keys */
 function validate($vars)
 {
-
     global $validation_keys;
     $mode = $vars['MODULE_PAYMENT_PAYLIKE_TRANSACTION_MODE'];
     $payment_paylike_app_key = $mode == "Live"?$vars[$validation_keys['LIVE_APP_KEY']]:$vars[$validation_keys['TEST_APP_KEY']];
     $payment_paylike_public_key = $mode == "Live"?$vars[$validation_keys['LIVE_PUBLIC_KEY']]:$vars[$validation_keys['TEST_PUBLIC_KEY']];
 
-	$payment_paylike_app_key;
-	$payment_paylike_public_key;
-	
     /* Initialize validator object */
     $validator = new PaylikeValidator();
     $errors = array();
