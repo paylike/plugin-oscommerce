@@ -51,14 +51,14 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
 
       7.3.Replace tep_db_query("update " . TABLE_CONFIGURATION . " set configuration_value = '" . $value . "' where configuration_key = '" . $key . "'"); line with:
       ```
-      if((sizeof($errors) === 0 || array_search($key, $validation_keys) === FALSE) || !strpos($_SERVER['REQUEST_URI'], 'module=paylike')){
+      if(sizeof($errors) === 0 || array_search($key, $validation_keys) === FALSE){
         tep_db_query("update " . TABLE_CONFIGURATION . " set configuration_value = '" . $value . "' where configuration_key = '" . $key . "'");
       }
       ```
 
       7.4.Add:
       ```
-      if(sizeof($errors) && strpos($_SERVER['REQUEST_URI'], 'module=paylike')){
+      if(sizeof($errors)){
         tep_redirect(tep_href_link(FILENAME_MODULES, 'set=' . $set . '&module=' . $HTTP_GET_VARS['module'] . '&action=edit'));
       }
       ```
