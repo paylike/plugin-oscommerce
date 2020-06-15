@@ -1,4 +1,6 @@
 <?php
+$validation_keys = array();
+$errors = array();
 if(strpos($_SERVER['REQUEST_URI'], 'module=paylike')){
     require_once('vendor/autoload.php');
     require_once('helpers/Paylike_Keys_Validator.php');
