@@ -4,7 +4,7 @@ $errors = array();
 if(strpos($_SERVER['REQUEST_URI'], 'module=paylike')){
     require_once('vendor/autoload.php');
     require_once('helpers/Paylike_Keys_Validator.php');
-    require_once($module_language_directory . $language . '/modules/payment/paylike.php');
+    require_once('../includes/languages/' . $language . '/modules/payment/paylike.php');
 
     /* Module keys that needs to be validated */
     $validation_keys = array('LIVE_APP_KEY'   =>'MODULE_PAYMENT_PAYLIKE_APP_KEY',
@@ -13,7 +13,7 @@ if(strpos($_SERVER['REQUEST_URI'], 'module=paylike')){
                              'TEST_PUBLIC_KEY'=>'MODULE_PAYMENT_PAYLIKE_TEST_KEY',
                             );
 
-    $errors = validate($HTTP_POST_VARS['configuration']);
+    $errors = validate($_POST['configuration']);
     /* In case of errors, write them into cookies */
     if (isset($errorHandler)) {
         $errorHandler->setCookieErrors($errors);
