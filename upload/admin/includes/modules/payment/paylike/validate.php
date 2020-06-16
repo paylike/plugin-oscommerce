@@ -1,19 +1,23 @@
 <?php
-require_once('vendor/autoload.php');
-require_once('helpers/Paylike_Keys_Validator.php');
-require_once($module_language_directory . $language . '/modules/payment/paylike.php');
+$validation_keys = array();
+$errors = array();
+if(strpos($_SERVER['REQUEST_URI'], 'module=paylike')){
+    require_once('vendor/autoload.php');
+    require_once('helpers/Paylike_Keys_Validator.php');
+    require_once($module_language_directory . $language . '/modules/payment/paylike.php');
 
-/* Module keys that needs to be validated */
-$validation_keys = array('LIVE_APP_KEY'   =>'MODULE_PAYMENT_PAYLIKE_APP_KEY',
-                         'LIVE_PUBLIC_KEY'=>'MODULE_PAYMENT_PAYLIKE_KEY',
-                         'TEST_APP_KEY'   =>'MODULE_PAYMENT_PAYLIKE_TEST_APP_KEY',
-                         'TEST_PUBLIC_KEY'=>'MODULE_PAYMENT_PAYLIKE_TEST_KEY',
-                        );
+    /* Module keys that needs to be validated */
+    $validation_keys = array('LIVE_APP_KEY'   =>'MODULE_PAYMENT_PAYLIKE_APP_KEY',
+                             'LIVE_PUBLIC_KEY'=>'MODULE_PAYMENT_PAYLIKE_KEY',
+                             'TEST_APP_KEY'   =>'MODULE_PAYMENT_PAYLIKE_TEST_APP_KEY',
+                             'TEST_PUBLIC_KEY'=>'MODULE_PAYMENT_PAYLIKE_TEST_KEY',
+                            );
 
-$errors = validate($HTTP_POST_VARS['configuration']);
-/* In case of errors, write them into cookies */
-if (isset($errorHandler)) {
-    $errorHandler->setCookieErrors($errors);
+    $errors = validate($HTTP_POST_VARS['configuration']);
+    /* In case of errors, write them into cookies */
+    if (isset($errorHandler)) {
+        $errorHandler->setCookieErrors($errors);
+    }
 }
 
 /* Validate module keys */
