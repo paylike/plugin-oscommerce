@@ -44,7 +44,9 @@ function pay(args, checkout, form) {
 
 document.addEventListener("DOMContentLoaded", function() {
   /* Submit event needed for HTML form validation */
-  $('form[name="checkout_confirmation"]').on('submit', submitForm);
+  if($("#payLikeCheckout").length){
+    $('form[name="checkout_confirmation"]').on('submit', submitForm);
+  }
 })
 
 function submitForm(e) {
