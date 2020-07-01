@@ -24,7 +24,7 @@ class paylike extends abstract_payment_module
         $this->appKey = MODULE_PAYMENT_PAYLIKE_TRANSACTION_MODE == 'Test' ? MODULE_PAYMENT_PAYLIKE_TEST_APP_KEY : MODULE_PAYMENT_PAYLIKE_APP_KEY;
         $this->formTitle = $_SESSION['PAYLIKE_TITLE'] = MODULE_PAYMENT_PAYLIKE_TITLE;
         $this->paymentType = MODULE_PAYMENT_PAYLIKE_PAYMENT_TYPE;
-        
+
         if (strpos($_SERVER['REQUEST_URI'], 'action=edit')) {
             echo '<script type="text/javascript" src="includes/modules/payment/paylike/paylike_admin.js"></script>';
             echo '<link rel="stylesheet" type="text/css" href="includes/modules/payment/paylike/paylike_admin.css"/>';
@@ -92,7 +92,7 @@ class paylike extends abstract_payment_module
     /* After order is processed */
     public function after_process()
     {
-        global $insert_id, $order, $order_totals;
+        global $insert_id, $order;
         /* If 'Instant' payment, capture  transaction via Paylike API */
         if ($this->paymentType === 'Instant') {
             /* If transaction succeed */
@@ -101,9 +101,8 @@ class paylike extends abstract_payment_module
                 $descriptor = "Order #$insert_id";
                 /* Init Paylike API */
                 require('includes/classes/paylike/init.php');
-
                 $paylike = new \Paylike\Paylike($this->appKey);
-                $amount = end($order_totals);
+                $amount = end($this->getOrderTotalsSummary());
                 $apps = $paylike->transactions();
                 $apps->capture($transactionId, [
                     'amount' => (float)number_format($amount['value'] * $order->info['currency_value'], 2, '.', '') * 100,
@@ -113,6 +112,28 @@ class paylike extends abstract_payment_module
             }
         }
         return false;
+    }
+
+    function getOrderTotalsSummary() {
+      $order_totals = [];
+      foreach (($GLOBALS['order_total_modules']->modules ?? []) as $value) {
+        $class = pathinfo($value, PATHINFO_FILENAME);
+        if ($GLOBALS[$class]->enabled) {
+          foreach ($GLOBALS[$class]->output as $module) {
+            if (tep_not_null($module['title']) && tep_not_null($module['text'])) {
+              $order_totals[] = [
+                'code' => $GLOBALS[$class]->code,
+                'title' => $module['title'],
+                'text' => $module['text'],
+                'value' => $module['value'],
+                'sort_order' => $GLOBALS[$class]->sort_order,
+              ];
+            }
+          }
+        }
+      }
+
+      return $order_totals;
     }
 
     /* Define module admin fields */

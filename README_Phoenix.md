@@ -7,7 +7,7 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
 
 ## Supported osCommerce versions
 
-*The plugin has been tested with osCommerce v.2.3.4.1 and osCommerce CE Phoenix
+*The plugin has been tested with osCommerce CE Phoenix v1.0.7.4
 
 ## Installation
 
@@ -16,18 +16,14 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
   2. Create a live account
   3. Create an app key for your osCommerce website
   4. Upload the files in the `upload` folder to root of your osCommerce store.
-  5. In: `includes/template_top.php` add:
+  5. In: `includes/application_top.php` add:
       ```
-        <?php
-            if ( basename( $PHP_SELF ) == 'checkout_confirmation.php' ) {
-                ?>
-                <script src="https://sdk.paylike.io/3.js"></script>
-                <script src= "includes/javascript/paylike.js"></script>
-                <?php
-              }
-          ?>
-        ```
-     Anywhere betwen the `head` tags.
+      if ( basename( $PHP_SELF ) == 'checkout_confirmation.php' ) {
+        echo '<script src="https://sdk.paylike.io/3.js"></script>';
+        echo '<script src= "includes/javascript/paylike.js"></script>';
+      }
+      ```
+     After the last line.
   6. In: `includes/.htaccess` add:
       ```
       <FilesMatch "paylike.php">

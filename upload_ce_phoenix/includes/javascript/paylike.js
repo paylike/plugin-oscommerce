@@ -29,11 +29,9 @@ function pay(args, checkout, form) {
         checkout.checkAllErrors();
       } else {
         /* Remove form submit event which prevent form action to proceed */
-        $(form).off('submit', submitForm);
         /* Set form action attribute */
-        $(form).attr("action", $(form).find("#payLikeCheckout").attr("action"));
         /* Force submit form */
-        $(form).submit();
+        $(form).off('submit', submitForm).attr("action", $(form).find("#payLikeCheckout").attr("action")).submit();
       }
     })
     return false;
