@@ -8,6 +8,12 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && isset($_POST['actio
         include($rootPath.'/includes/classes/language.php');
         $order = new order();
 
+        // load the selected shipping module
+        $shipping_modules = new shipping($shipping);
+
+        $order_total_modules = new order_total();
+        $order_total_modules->process();
+
         $next_order_id = tep_db_fetch_array(tep_db_query('select max(orders_id)+1 as max from orders'))['max'];
         $lng = new language;
         $current_lang = array_filter($lng->catalog_languages, function ($lang) use ($languages_id) {

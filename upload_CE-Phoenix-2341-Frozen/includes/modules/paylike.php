@@ -8,6 +8,15 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && isset($_POST['actio
         require('includes/classes/order.php');
         include('includes/classes/language.php');
         $order = new order;
+
+        // load the selected shipping module
+        require('includes/classes/shipping.php');
+        $shipping_modules = new shipping($shipping);
+
+        require('includes/classes/order_total.php');
+        $order_total_modules = new order_total;
+        $order_total_modules->process();
+
         $next_order_id = tep_db_fetch_array(tep_db_query('select max(orders_id)+1 as max from orders'))['max'];
         $lng = new language;
         $current_lang = array_filter($lng->catalog_languages, function ($lang) use ($languages_id) {
