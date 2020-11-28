@@ -7,7 +7,7 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
 
 ## Supported osCommerce versions
 
-*The plugin has been tested with osCommerce CE Phoenix v1.0.7.4
+*The plugin has been tested with osCommerce CE Phoenix up to v1.0.7.10
 
 ## Installation
 
