@@ -22,7 +22,7 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
         <?php
             if ( basename( $PHP_SELF ) == 'checkout_confirmation.php' ) {
                 ?>
-                <script src="https://sdk.paylike.io/3.js"></script>
+                <script src="https://sdk.paylike.io/6.js"></script>
                 <script src= "includes/javascript/paylike.js"></script>
                 <?php
     	        }
@@ -69,7 +69,7 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
       if(isset($errorHandler))$errorHandler->display();
       ```
       After case 'edit': line.
-  8. Install the Paylike module from modules -> payment in the admin  
+  8. Install the Paylike module from modules -> payment in the admin
   9. Insert the app key and your public key in the settings and enable the plugin
 
 ## Updating settings
