@@ -22,7 +22,7 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
         <?php
             if ( basename( $PHP_SELF ) == 'checkout_confirmation.php' ) {
                 ?>
-                <script src="https://sdk.paylike.io/3.js"></script>
+                <script src="https://sdk.paylike.io/6.js"></script>
                 <script src= "includes/javascript/paylike.js"></script>
                 <?php
     	        }
