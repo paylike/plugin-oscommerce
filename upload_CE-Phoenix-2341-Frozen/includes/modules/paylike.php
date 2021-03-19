@@ -47,7 +47,7 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && isset($_POST['actio
                     'IP'=>$_SERVER['REMOTE_ADDR']
                 ],
                 'platform'=>['name'=>'osCommerce','version'=>tep_get_version()],
-                'paylikePluginVersion'=>'0.2',
+                'paylikePluginVersion'=>'0.3',
             ],
         ];
         echo json_encode($outputData);
