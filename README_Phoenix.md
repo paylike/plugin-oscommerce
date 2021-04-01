@@ -64,7 +64,8 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
       ```
       <?php if(isset($errorHandler))$errorHandler->display(); ?>
       ```
-      Before <div class="row no-gutters"> line.
+      Before ```<div class="row no-gutters">``` line.
+
   8. Install the Paylike module from modules -> payment in the admin  
   9. Insert the app key and your public key in the settings and enable the plugin
 
