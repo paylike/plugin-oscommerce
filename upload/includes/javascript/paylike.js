@@ -1,7 +1,11 @@
 function pay(args, checkout, button){
-    paylike.popup({
-        currency: args.currency,
-        amount: args.amount,
+    paylike.pay({
+        test: ('Test' == args.test_mode) ? (true) : (false),
+        amount: {
+            currency: args.currency,
+            exponent: args.exponent,
+            value: args.amount
+        },
         title: args.store_name,
         locale: args.locale,
         custom: args.custom,
