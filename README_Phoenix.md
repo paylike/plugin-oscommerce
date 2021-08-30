@@ -19,7 +19,7 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
   5. In: `includes/application_top.php` add:
       ```
       if ( basename( $PHP_SELF ) == 'checkout_confirmation.php' ) {
-        echo '<script src="https://sdk.paylike.io/6.js"></script>';
+        echo '<script src="https://sdk.paylike.io/10.js"></script>';
         echo '<script src= "includes/javascript/paylike.js"></script>';
       }
       ```

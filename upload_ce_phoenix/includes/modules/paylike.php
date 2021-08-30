@@ -4,9 +4,17 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && isset($_POST['actio
     $rootPath = dirname(dirname(dirname($_SERVER['SCRIPT_FILENAME'])));
     require $rootPath . '/includes/application_top.php';
 
+    /**
+     * Paylike payment module version
+     */
+    define('MODULE_PAYMENT_PAYLIKE_VERSION', '0.4');
+
     if (isset($_POST['action']) && $_POST['action'] === 'getOrderTotalsData') {
         include($rootPath.'/includes/classes/language.php');
         $order = new order();
+
+        /** Load paylike currencies file with some needed currencies attributes. */
+        require(DIR_WS_CLASSES . 'paylike_currencies.php');
 
         // load the selected shipping module
         $shipping_modules = new shipping($shipping);
@@ -28,9 +36,11 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && isset($_POST['actio
             ];
         }
         $outputData = [
+            'test_mode'=>MODULE_PAYMENT_PAYLIKE_TRANSACTION_MODE,
             'store_name'=>$_SESSION['PAYLIKE_TITLE']?:STORE_NAME,
             'currency'=>$order->info['currency'],
-            'amount'=>(float)number_format($order->info['total']*$order->info['currency_value'], 2, '.', '')*100,
+            'amount'=>(int)number_format($order->info['total']*$order->info['currency_value'], 2, '.', '')*100,
+            'exponent'=>get_paylike_currency($order->info['currency'])['exponent'],
             'locale'=>key($current_lang),
             'custom'=>[
                 'order_id'=>$next_order_id,
@@ -43,8 +53,8 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && isset($_POST['actio
                     'address'=>$order->customer['country']['iso_code2'].' '.$order->customer['city'].' '.$order->customer['street_address'],
                     'IP'=>$_SERVER['REMOTE_ADDR']
                 ],
-                'platform'=>['name'=>'osCommerce','version'=>tep_get_version()],
-                'paylikePluginVersion'=>'0.3',
+                'platform'=>['osCommerce Phoenix'=>tep_get_version()],
+                'paylikePluginVersion'=>MODULE_PAYMENT_PAYLIKE_VERSION,
             ],
         ];
         echo json_encode($outputData);
@@ -59,8 +69,7 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && isset($_POST['actio
     }
 }
 ?>
-
 <script>
-	  /* Initialize paylike javascript API */
-    var paylike = Paylike('<?=$GLOBALS['paylike']->key?>');
+    /* Initialize paylike javascript API */
+    var paylike = Paylike({key: '<?=$GLOBALS['paylike']->key?>'});
 </script>
