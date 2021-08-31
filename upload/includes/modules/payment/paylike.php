@@ -320,7 +320,7 @@ class paylike {
                 $amount = end($order_totals);
                 $apps = $paylike->transactions();
                 $apps->capture($transactionId, [
-                    'amount' => (int)number_format($amount['value'] * $order->info['currency_value'], 2, '.', '') * 100,
+                    'amount' => (float)number_format($amount['value'] * $order->info['currency_value'], 2, '.', '') * 100,
                     'currency' => $order->info['currency'],
                     'descriptor' => $descriptor
                 ]);
