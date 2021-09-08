@@ -13,7 +13,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'
         $order = new order();
 
         /** Load paylike currencies file with some needed currencies attributes. */
-        require(DIR_WS_CLASSES . 'paylike_currencies.php');
+        require($rootPath . '/includes/classes/paylike_currencies.php');
 
         // load the selected shipping module
         $shipping_modules = new shipping($shipping);
@@ -49,7 +49,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'
                     'name'=>$order->customer['firstname'],
                     'email'=>$order->customer['email_address'],
                     'phoneNo'=>$order->customer['telephone'],
-                    'address'=>$order->customer['country']['iso_code2'].' '.$order->customer['city'].' '.$order->customer['street_address'],
+                    'address'=>$order->customer['country']['iso_code_2'].' '.$order->customer['city'].' '.$order->customer['street_address'],
                     'IP'=>$_SERVER['REMOTE_ADDR']
                 ],
                 'platform'=>['osCommerce Phoenix'=>tep_get_version()],
