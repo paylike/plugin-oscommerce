@@ -1,5 +1,5 @@
 <?php
-if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && isset($_POST['action'])) {
+if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && isset($_POST['action'])) {
     chdir('../../');
     $rootPath = dirname(dirname(dirname($_SERVER['SCRIPT_FILENAME'])));
     require $rootPath . '/includes/application_top.php';
@@ -10,7 +10,6 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && isset($_POST['actio
     define('MODULE_PAYMENT_PAYLIKE_VERSION', '0.4');
 
     if (isset($_POST['action']) && $_POST['action'] === 'getOrderTotalsData') {
-        include($rootPath.'/includes/classes/language.php');
         $order = new order();
 
         /** Load paylike currencies file with some needed currencies attributes. */
@@ -39,7 +38,7 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && isset($_POST['actio
             'test_mode'=>MODULE_PAYMENT_PAYLIKE_TRANSACTION_MODE,
             'store_name'=>$_SESSION['PAYLIKE_TITLE']?:STORE_NAME,
             'currency'=>$order->info['currency'],
-            'amount'=>(int)number_format($order->info['total']*$order->info['currency_value'], 2, '.', '')*100,
+            'amount'=>number_format($order->info['total']*$order->info['currency_value'], 2, '.', '')*100,
             'exponent'=>get_paylike_currency($order->info['currency'])['exponent'],
             'locale'=>key($current_lang),
             'custom'=>[

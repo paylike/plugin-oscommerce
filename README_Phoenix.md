@@ -7,7 +7,7 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
 
 ## Supported osCommerce versions
 
-*The plugin has been tested with osCommerce CE Phoenix up to v1.0.7.10
+*The plugin has been tested with osCommerce CE Phoenix up to v1.0.7.18
 
 ## Installation
 
@@ -27,7 +27,7 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
   6. In: `includes/.htaccess` add:
       ```
       <FilesMatch "paylike.php">
-         Allow from all
+         Require all granted
       </FilesMatch>
 
       ```
@@ -66,7 +66,7 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
       ```
       Before ```<div class="row no-gutters">``` line.
 
-  8. Install the Paylike module from modules -> payment in the admin  
+  8. Install the Paylike module from modules -> payment in the admin
   9. Insert the app key and your public key in the settings and enable the plugin
 
 ## Updating settings
