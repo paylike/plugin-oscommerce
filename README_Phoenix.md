@@ -16,6 +16,14 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
   2. Create a live account
   3. Create an app key for your osCommerce website
   4. Upload the files in the `upload` folder to root of your osCommerce store.
+
+      NOTE:
+
+      To skip steps 5 - 7, upload `phoenixautochange.php` file to your osCommerce store root.\
+      Then access `YOUR_WEB_URL/phoenixautochange.php` in browser address bar.\
+      Will show log/success messages based on script status and the file `phoenixautochange.php` will be deleted.\
+      Then go to step 8.
+
   5. In: `includes/application_top.php` add:
       ```
       if ( basename( $PHP_SELF ) == 'checkout_confirmation.php' ) {
