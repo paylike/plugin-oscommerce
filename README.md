@@ -5,10 +5,7 @@ available by a user.
 
 Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
 
-
-## Supported osCommerce versions
-
-*The plugin has been tested with osCommerce v.2.3.4.1
+## Supported osCommerce versions [![Last succesfull test](https://log.derikon.ro/api/v1/log/read?tag=oscommerce&view=svg&label=osCommerce&key=ecommerce&background=5C9CCC)](https://log.derikon.ro/api/v1/log/read?tag=oscommerce&view=html)
 
 ## Installation
 
