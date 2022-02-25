@@ -154,7 +154,6 @@ export var TestMethods = {
 
         /** Get paylike version with request from a file. */
         cy.request({
-            // url: this.StoreUrl + '/includes/modules/payment/paylike_version.txt',
             url: this.StoreUrl + '/includes/modules/payment/paylike_version.txt',
             auth: {
                 username: Cypress.env('ENV_HTTP_USER'),
