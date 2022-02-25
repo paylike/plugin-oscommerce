@@ -135,6 +135,8 @@ export var TestMethods = {
         /** Go to system information. */
         cy.goToPage(this.SystemInfoAdminUrl);
 
+        cy.wait(1000);
+
         /** Get framework version. */
         cy.get('h1').contains(this.ShopName, {matchCase: false}).then($frameworkVersion => {
             var frameworkVersion = ($frameworkVersion.text()).replace(/\.?[^0-9.]/g, '');
