@@ -9,10 +9,10 @@ describe('paylike plugin full test', () => {
      * Login into admin and frontend to store cookies.
      */
     before(() => {
-        cy.goToPage(Cypress.env('ENV_ADMIN_URL'));
-        TestMethods.loginIntoAdminBackend();
         cy.goToPage(TestMethods.StoreUrl);
         TestMethods.loginIntoClientAccount();
+        cy.goToPage(Cypress.env('ENV_ADMIN_URL'));
+        TestMethods.loginIntoAdminBackend();
     });
 
     /**
@@ -38,7 +38,7 @@ describe('paylike plugin full test', () => {
 
         /** Make Instant payments */
         for (var currency of currenciesToTest) {
-            TestMethods.payWithSelectedCurrency(currency, 'refund');
+            TestMethods.payWithSelectedCurrency(currency);
         }
     });
 
@@ -53,9 +53,7 @@ describe('paylike plugin full test', () => {
              * HARDCODED currency
              */
             if ('USD' == currency || 'RON' == currency) {
-                TestMethods.payWithSelectedCurrency(currency, 'capture');
-                /** In "delayed" mode we check "void" action too. */
-                TestMethods.payWithSelectedCurrency(currency, 'void');
+                TestMethods.payWithSelectedCurrency(currency);
             }
         }
     });
