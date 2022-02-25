@@ -12,10 +12,10 @@ export var TestMethods = {
     RemoteVersionLogUrl: Cypress.env('REMOTE_LOG_URL'),
 
     /** Construct some variables to be used bellow. */
-    ShopName: 'oscommerce',
+    ShopName: 'phoenixcart',
     PaylikeName: 'paylike',
-    PaymentMethodsAdminUrl: '/modules.php?set=payment',
-    SystemInfoAdminUrl: '/server_info.php',
+    PaymentMethodsAdminUrl: '/modules.php?set=payment&module=paylike&action=edit',
+    SystemInfoAdminUrl: '/version_check.php',
 
     /**
      * Login to admin backend account
@@ -27,7 +27,6 @@ export var TestMethods = {
      * Login to client|user frontend account
      */
     loginIntoClientAccount() {
-        cy.get('a[id=tdb3]').click();
         cy.loginIntoAccount('input[name=email_address]', 'input[name=password]', 'client');
     },
 
@@ -40,15 +39,10 @@ export var TestMethods = {
         /** Go to Paylike payment method. */
         cy.phoenixGoToPage(this.PaymentMethodsAdminUrl);
 
-        /** Select Paylike. */
-        cy.get('.dataTableContent').contains(this.PaylikeName, {matchCase: false}).click();
-
-        cy.get('#tdb2').click();
-
         /** Select capture mode. */
         cy.get(`input[value=${captureMode}]`).click()
 
-        cy.get('#tdb2').click();
+        cy.get('.btn.btn-success.mr-2').click();
     },
 
     /**
@@ -77,28 +71,29 @@ export var TestMethods = {
 
         cy.wait(500);
 
-        /** Select random product (products are randomize by default). */
-        cy.get('td a img').first().click();
-
-        cy.get('button#tdb5').click();
+        /** Select first product. */
+        cy.get('.btn.btn-light.btn-product-listing.btn-buy').first().click();
 
         /** Go to checkout. */
-        cy.get('.ui-button-icon-primary.ui-icon.ui-icon-triangle-1-e').first().click();
+        cy.get('#btn2').click();
 
         /** Continue checkout. */
-        cy.get('button#tdb6').click();
+        cy.get('.btn.btn-success.btn-lg.btn-block').click();
 
         /** Choose Paylike. */
-        cy.get(`input[value=${this.PaylikeName}]`).click();
+        cy.get(`.custom-control label[for=p_${this.PaylikeName}]`).click();
 
         /** Continue checkout. */
-        cy.get('button#tdb6').click();
+        cy.get('.btn.btn-success.btn-lg.btn-block').click();
 
         /** Get total amount. */
         cy.get(':nth-child(2) > strong').then($grandTotal => {
             var expectedAmount = PaylikeTestHelper.filterAndGetAmountInMinor($grandTotal, currency);
             cy.wrap(expectedAmount).as('expectedAmount');
         });
+
+        /** Agree T&C. */
+        cy.get('#inputMATC').click();
 
         /** Show paylike popup. */
         cy.get('#payLikeCheckout').click();
@@ -118,14 +113,15 @@ export var TestMethods = {
 
         cy.wait(500);
 
-        cy.get('h1').should('contain', 'Your Order Has Been Processed!');
+        cy.get('h1').should('contain', 'Your Order is Complete');
     },
 
     /**
      * Change shop currency in frontend
      */
     changeShopCurrency(currency) {
-        cy.get('select[name=currency]').select(currency);
+        cy.get('#navDropdownCurrencies').click();
+        cy.get(`a[href*=${currency}]`).click();
     },
 
     /**
@@ -138,23 +134,12 @@ export var TestMethods = {
         cy.wait(1000);
 
         /** Get framework version. */
-        cy.get('h1').contains(this.ShopName, {matchCase: false}).then($frameworkVersion => {
+        cy.get('.lead > strong').then($frameworkVersion => {
             var frameworkVersion = ($frameworkVersion.text()).replace(/\.?[^0-9.]/g, '');
             cy.wrap(frameworkVersion).as('frameworkVersion');
         });
 
-        // Cypress.$.ajax({
-        //     method: 'POST',
-        //     url: this.StoreUrl + '/includes/modules/paylike.php?action=getOrderTotalsData',
-        //     auth: {
-        //         username: Cypress.env('ENV_HTTP_USER'),
-        //         password: Cypress.env('ENV_HTTP_PASS')
-        //     },
-        // }).then((resp) => {
-        //     cy.wrap(resp).as('paylikeVersion');
-        // });
-
-        /** Get paylike version with request from a file. */
+        /** Get paylike version from a file. */
         cy.request({
             url: this.StoreUrl + '/includes/modules/payment/paylike_version.txt',
             auth: {
