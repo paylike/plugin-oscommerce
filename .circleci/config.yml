@@ -72,7 +72,7 @@ workflows:
       # the following must run after all test passed
       # to show latest supported version in repository readme.md file
       - cypress/run:
-          name: Run_LOG_VERSION_remotely
+          name: Run_phoenix_LOG_VERSION_remotely
           requires:
             - Run_phoenix_FULL_tests
           context:
