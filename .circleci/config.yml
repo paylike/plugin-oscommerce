@@ -59,7 +59,7 @@ workflows:
               only:
                 - cypress-tests
       - cypress/run:
-          name: Run_FULL_tests
+          name: Run_phoenix_FULL_tests
           requires:
             - Run_phoenix_QUICK_tests
           context:
