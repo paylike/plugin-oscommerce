@@ -15,6 +15,7 @@ export var TestMethods = {
     ShopName: 'oscommerce',
     PaylikeName: 'paylike',
     PaymentMethodsAdminUrl: '/modules.php?set=payment',
+    SystemInfoAdminUrl: '/server_info.php',
 
     /**
      * Login to admin backend account
@@ -131,19 +132,35 @@ export var TestMethods = {
      * Get Shop & Paylike versions and send log data.
      */
     logVersions() {
+        /** Go to system information. */
+        cy.goToPage(this.SystemInfoAdminUrl);
+
         /** Get framework version. */
         cy.get('h1').contains(this.ShopName, {matchCase: false}).then($frameworkVersion => {
             var frameworkVersion = ($frameworkVersion.text()).replace(/\.?[^0-9.]/g, '');
             cy.wrap(frameworkVersion).as('frameworkVersion');
         });
 
+        // Cypress.$.ajax({
+        //     method: 'POST',
+        //     url: this.StoreUrl + '/includes/modules/paylike.php?action=getOrderTotalsData',
+        //     auth: {
+        //         username: Cypress.env('ENV_HTTP_USER'),
+        //         password: Cypress.env('ENV_HTTP_PASS')
+        //     },
+        // }).then((resp) => {
+        //     cy.wrap(resp).as('paylikeVersion');
+        // });
+
         /** Get paylike version with request from a file. */
         cy.request({
+            // url: this.StoreUrl + '/includes/modules/payment/paylike_version.txt',
             url: this.StoreUrl + '/includes/modules/payment/paylike_version.txt',
             auth: {
                 username: Cypress.env('ENV_HTTP_USER'),
                 password: Cypress.env('ENV_HTTP_PASS')
-            }}).then((resp) => {
+            },
+        }).then((resp) => {
             cy.wrap(resp.body).as('paylikeVersion');
         });
 
