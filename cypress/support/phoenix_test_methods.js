@@ -7,8 +7,8 @@ import { PaylikeTestHelper } from './test_helper.js';
 export var TestMethods = {
 
     /** Admin & frontend user credentials. */
-    StoreUrl: (Cypress.env('ENV_ADMIN_URL').match(/^(?:http(?:s?):\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/im))[0],
-    AdminUrl: Cypress.env('ENV_ADMIN_URL'),
+    StoreUrl: (Cypress.env('ENV_PHOENIX_ADMIN_URL').match(/^(?:http(?:s?):\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/im))[0],
+    AdminUrl: Cypress.env('ENV_PHOENIX_ADMIN_URL'),
     RemoteVersionLogUrl: Cypress.env('REMOTE_LOG_URL'),
 
     /** Construct some variables to be used bellow. */
@@ -38,7 +38,7 @@ export var TestMethods = {
      */
     changePaylikeCaptureMode(captureMode) {
         /** Go to Paylike payment method. */
-        cy.goToPage(this.PaymentMethodsAdminUrl);
+        cy.phoenixGoToPage(this.PaymentMethodsAdminUrl);
 
         /** Select Paylike. */
         cy.get('.dataTableContent').contains(this.PaylikeName, {matchCase: false}).click();
@@ -70,7 +70,7 @@ export var TestMethods = {
      */
     makePaymentFromFrontend(currency) {
         /** Go to store frontend. */
-        cy.goToPage(this.StoreUrl);
+        cy.phoenixGoToPage(this.StoreUrl);
 
         /** Change currency. */
         this.changeShopCurrency(currency);
@@ -133,7 +133,7 @@ export var TestMethods = {
      */
     logVersions() {
         /** Go to system information. */
-        cy.goToPage(this.SystemInfoAdminUrl);
+        cy.phoenixGoToPage(this.SystemInfoAdminUrl);
 
         cy.wait(1000);
 

@@ -2,16 +2,16 @@
 
 'use strict';
 
-import { TestMethods } from '../support/test_methods.js';
+import { TestMethods } from '../support/phoenix_test_methods.js';
 
 describe('paylike plugin quick test', () => {
     /**
      * Login into admin and frontend to store cookies.
      */
     before(() => {
-        cy.goToPage(TestMethods.StoreUrl);
+        cy.phoenixGoToPage(TestMethods.StoreUrl);
         TestMethods.loginIntoClientAccount();
-        cy.goToPage(Cypress.env('ENV_ADMIN_URL'));
+        cy.phoenixGoToPage(Cypress.env('ENV_PHOENIX_ADMIN_URL'));
         TestMethods.loginIntoAdminBackend();
     });
 
