@@ -38,7 +38,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'
             'test_mode'=>MODULE_PAYMENT_PAYLIKE_TRANSACTION_MODE,
             'store_name'=>$_SESSION['PAYLIKE_TITLE']?:STORE_NAME,
             'currency'=>$order->info['currency'],
-            'amount'=>number_format($order->info['total']*$order->info['currency_value'], 2, '.', '')*100,
+            'amount'=>ceil(number_format($order->info['total']*$order->info['currency_value'], 2, '.', '')*100),
             'exponent'=>get_paylike_currency($order->info['currency'])['exponent'],
             'locale'=>key($current_lang),
             'custom'=>[
