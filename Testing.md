@@ -27,6 +27,7 @@ As you can see the plugin is bundled with Cypress testing on this repository. Yo
     "ENV_HTTP_USER": "", // if you have HTTP auth when accessing website
     "ENV_HTTP_PASS": "",
     "ENV_ADMIN_URL": "", // like http(s)://baseUrl/administrator
+    "ENV_PHOENIX_ADMIN_URL": "",
     "ENV_CLIENT_USER": "", // frontend user
     "ENV_CLIENT_PASS": "",
     "ENV_ADMIN_USER": "", // admin user
