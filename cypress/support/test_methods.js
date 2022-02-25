@@ -132,8 +132,7 @@ export var TestMethods = {
      */
     logVersions() {
         /** Get framework version. */
-        cy.get('.adminHeaderAlerts').contains('using').then($frameworkVersion => {
-            // var frameworkVersion = (($frameworkVersion.text()).replace(/[^0-9.]/g, '')).substring;
+        cy.get('h1').contains(this.ShopName, {matchCase: false}).then($frameworkVersion => {
             var frameworkVersion = ($frameworkVersion.text()).replace(/\.?[^0-9.]/g, '');
             cy.wrap(frameworkVersion).as('frameworkVersion');
         });
