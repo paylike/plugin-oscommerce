@@ -9,7 +9,7 @@ describe('paylike plugin quick test', () => {
      * Login into admin and frontend to store cookies.
      */
     before(() => {
-        cy.phoenixGoToPage(TestMethods.StoreUrl);
+        cy.phoenixGoToPage(TestMethods.StoreUrl + '/login.php');
         TestMethods.loginIntoClientAccount();
         cy.phoenixGoToPage(Cypress.env('ENV_PHOENIX_ADMIN_URL'));
         TestMethods.loginIntoAdminBackend();
