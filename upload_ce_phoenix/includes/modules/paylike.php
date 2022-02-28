@@ -7,7 +7,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'
     /**
      * Paylike payment module version
      */
-    define('MODULE_PAYMENT_PAYLIKE_VERSION', '0.4');
+    define('MODULE_PAYMENT_PAYLIKE_VERSION', '0.5');
 
     if (isset($_POST['action']) && $_POST['action'] === 'getOrderTotalsData') {
         $order = new order();
