@@ -111,7 +111,7 @@ export var TestMethods = {
          */
          PaylikeTestHelper.fillAndSubmitPaylikePopup();
 
-        cy.wait(1000);
+        cy.wait(3000);
 
         cy.get('h1').should('contain', 'Your Order is Complete');
     },
