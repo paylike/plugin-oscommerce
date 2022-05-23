@@ -5,9 +5,7 @@ available by a user.
 
 Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
 
-## Supported osCommerce versions
-
-*The plugin has been tested with osCommerce CE Phoenix up to v1.0.7.10
+## Supported PhoenixCart versions [![Last succesfull test](https://log.derikon.ro/api/v1/log/read?tag=phoenixcart&view=svg&label=PhoenixCart&key=ecommerce&background=FC7F03)](https://log.derikon.ro/api/v1/log/read?tag=phoenixcart&view=html)
 
 ## Installation
 
@@ -16,10 +14,18 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
   2. Create a live account
   3. Create an app key for your osCommerce website
   4. Upload the files in the `upload` folder to root of your osCommerce store.
+
+      NOTE:
+
+      To skip steps 5 - 7, upload `phoenixautochange.php` file to your osCommerce store root.\
+      Then access `YOUR_WEB_URL/phoenixautochange.php` in browser address bar.\
+      Will show log/success messages based on script status and the file `phoenixautochange.php` will be deleted.\
+      Then go to step 8.
+
   5. In: `includes/application_top.php` add:
       ```
       if ( basename( $PHP_SELF ) == 'checkout_confirmation.php' ) {
-        echo '<script src="https://sdk.paylike.io/6.js"></script>';
+        echo '<script src="https://sdk.paylike.io/10.js"></script>';
         echo '<script src= "includes/javascript/paylike.js"></script>';
       }
       ```
@@ -27,7 +33,7 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
   6. In: `includes/.htaccess` add:
       ```
       <FilesMatch "paylike.php">
-         Allow from all
+         Require all granted
       </FilesMatch>
 
       ```
@@ -64,8 +70,9 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
       ```
       <?php if(isset($errorHandler))$errorHandler->display(); ?>
       ```
-      Before <div class="row no-gutters"> line.
-  8. Install the Paylike module from modules -> payment in the admin  
+      Before ```<div class="row no-gutters">``` line.
+
+  8. Install the Paylike module from modules -> payment in the admin
   9. Insert the app key and your public key in the settings and enable the plugin
 
 ## Updating settings
